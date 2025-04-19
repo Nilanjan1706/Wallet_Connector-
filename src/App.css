@@ -1,0 +1,138 @@
+/* === Wallet Page Wrapper === */
+.wallet-page-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+/* === Connection Method Selector === */
+.connection-method-selector {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.connection-method-selector button {
+  flex-grow: 1;
+  padding: 10px 15px;
+  border: none;
+  background: none;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.connection-method-selector button.active {
+  color: #0033ad;
+  font-weight: bold;
+  border-bottom: 3px solid #0033ad;
+}
+
+/* === Connector Sections === */
+.browser-wallets,
+.seed-phrase-connector,
+.private-key-connector {
+  padding: 20px 0;
+  margin-top: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: black;
+  background-color: #fff;
+}
+
+/* === Wallet Buttons === */
+.wallet-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+}
+
+.wallet-buttons button {
+  padding: 12px 20px;
+  background-color: red;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.wallet-buttons button:hover {
+  background-color: #eaeef3;
+}
+
+/* === Textarea Styling === */
+textarea {
+  width: 90%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+/* === General Button Styling === */
+button {
+  padding: 12px 24px;
+  font-size: 16px;
+  color: white;
+  background-color: #0033ad;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+button:hover:not(:disabled) {
+  background-color: #002780;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}
+
+/* === Info & Error Messages === */
+.warning {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 14px;
+  color: #736969;
+}
+
+.loading {
+  padding: 10px;
+  text-align: center;
+  color: #0033ad;
+}
+
+.error {
+  padding: 10px;
+  margin-top: 10px;
+  text-align: center;
+  color: #d9534f;
+}
+
+/* === Wallet Details === */
+.wallet-details {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+}
+
+.detail {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.detail .address,
+.detail .balance {
+  font-weight: bold;
+  word-break: break-word;
+}
