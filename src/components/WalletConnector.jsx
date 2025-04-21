@@ -1,3 +1,4 @@
+/* global BigInt */
 import React, { useState, useEffect } from "react";
 import { Lucid, Blockfrost } from "lucid-cardano";
 
@@ -10,6 +11,9 @@ const WalletConnector = () => {
   const [connectionMethod, setConnectionMethod] = useState("browser");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [recipientAddress, setRecipientAddress] = useState("");
+  const [sendAmount, setSendAmount] = useState("");
+  const [txStatus, setTxStatus] = useState("");
 
   // Initialize Lucid with Blockfrost
   useEffect(() => {
@@ -36,7 +40,7 @@ const WalletConnector = () => {
     initializeLucid();
   }, []);
 
-  // Function to connect browser wallets
+  // Function to connect browser wallets :
   const connectBrowserWallet = async (walletName) => {
     setLoading(true);
     setError("");
@@ -160,9 +164,41 @@ const WalletConnector = () => {
     }
   };
 
+  // Function to send ADA
+  const sendAdaTransaction = async () => {
+    setTxStatus("Sending transaction...");
+    try {
+      if (!lucid || !walletConnected) {
+        throw new Error("Wallet not connected");
+      }
+
+      if (!recipientAddress || !sendAmount) {
+        throw new Error("Recipient address and amount are required");
+      }
+
+      const lovelaceAmount = BigInt(Math.floor(Number(sendAmount) * 1_000_000)); // Convert ADA to Lovelace
+
+      const tx = await lucid
+        .newTx()
+        .payToAddress(recipientAddress, { lovelace: BigInt(lovelaceAmount) })
+        .complete();
+
+      const signedTx = await tx.sign().complete();
+      const txHash = await signedTx.submit();
+
+      setTxStatus(`Transaction submitted! Tx Hash: ${txHash}`);
+      console.log("Transaction successful:", txHash);
+    } catch (error) {
+      console.error("Transaction failed:", error);
+      setTxStatus(`Transaction failed: ${error.message}`);
+    }
+  };
+
   return (
     <div className="wallet-connector">
-      <h2>Cardano Wallet Connector</h2>
+      <h2 style={{ color: "green", textAlign: "center" }}>
+        Cardano Wallet Connector
+      </h2>
 
       {lucid ? (
         !walletConnected ? (
@@ -171,12 +207,14 @@ const WalletConnector = () => {
               <button
                 className={connectionMethod === "browser" ? "active" : ""}
                 onClick={() => setConnectionMethod("browser")}
+                style={{ color: "black" }}
               >
                 Browser Wallet
               </button>
               <button
                 className={connectionMethod === "seed" ? "active" : ""}
                 onClick={() => setConnectionMethod("seed")}
+                style={{ color: "black" }}
               >
                 Seed Phrase
               </button>
@@ -217,6 +255,7 @@ const WalletConnector = () => {
                   onChange={(e) => setSeedPhrase(e.target.value)}
                   rows={4}
                   disabled={loading}
+                  style={{ color: "black" }}
                 />
                 <button
                   onClick={connectWithSeedPhrase}
@@ -247,6 +286,35 @@ const WalletConnector = () => {
                 {balance ? `${balance} ADA` : "Loading..."}
               </span>
             </div>
+
+            {/* ADA Send Form */}
+            <h3>Send ADA</h3>
+            <div className="transaction-form">
+              <input
+                type="text"
+                placeholder="Recipient Address"
+                value={recipientAddress}
+                onChange={(e) => setRecipientAddress(e.target.value)}
+                style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+              />
+              <input
+                type="number"
+                placeholder="Amount in ADA"
+                value={sendAmount}
+                onChange={(e) => setSendAmount(e.target.value)}
+                style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+              />
+              <button
+                onClick={sendAdaTransaction}
+                disabled={!sendAmount || !recipientAddress}
+              >
+                Send ADA
+              </button>
+              {txStatus && (
+                <p style={{ marginTop: "10px", color: "blue" }}>{txStatus}</p>
+              )}
+            </div>
+
             <button onClick={() => window.location.reload()}>
               Disconnect Wallet
             </button>
