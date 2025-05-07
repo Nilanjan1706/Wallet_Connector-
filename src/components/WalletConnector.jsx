@@ -196,7 +196,7 @@ const WalletConnector = () => {
 
   return (
     <div className="wallet-connector">
-      <h2 style={{ color: "green", textAlign: "center" }}>
+      <h2 style={{ color: "Black", textAlign: "center" }}>
         Cardano Wallet Connector
       </h2>
 
@@ -207,14 +207,14 @@ const WalletConnector = () => {
               <button
                 className={connectionMethod === "browser" ? "active" : ""}
                 onClick={() => setConnectionMethod("browser")}
-                style={{ color: "black" }}
+                style={{ color: "Grey" }}
               >
                 Browser Wallet
               </button>
               <button
                 className={connectionMethod === "seed" ? "active" : ""}
                 onClick={() => setConnectionMethod("seed")}
-                style={{ color: "black" }}
+                style={{ color: "Grey" }}
               >
                 Seed Phrase
               </button>

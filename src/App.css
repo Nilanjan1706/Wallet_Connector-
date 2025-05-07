@@ -53,8 +53,8 @@
 
 .wallet-buttons button {
   padding: 12px 20px;
-  background-color: red;
-  border: 1px solid #ddd;
+  background-color: rgb(51, 139, 0);
+  border: 1px solid #000000;
   border-radius: 6px;
   cursor: pointer;
   font-weight: bold;
@@ -88,7 +88,7 @@ button {
 }
 
 button:hover:not(:disabled) {
-  background-color: #002780;
+  background-color: #281a07;
 }
 
 button:disabled {
@@ -101,13 +101,13 @@ button:disabled {
   margin-top: 15px;
   text-align: center;
   font-size: 14px;
-  color: #736969;
+  color: #6801f0;
 }
 
 .loading {
   padding: 10px;
   text-align: center;
-  color: #0033ad;
+  color: #841032;
 }
 
 .error {
